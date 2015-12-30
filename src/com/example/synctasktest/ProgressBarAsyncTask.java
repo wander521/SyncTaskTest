@@ -18,13 +18,15 @@ public class ProgressBarAsyncTask extends AsyncTask<Integer, Integer, String> {
 
 	private TextView textView;
 	private ProgressBar progressBar;
+	private ProgressDialog progressDialog;
 //	private ProgressDialog pdialog;
 
-	public ProgressBarAsyncTask(TextView textView, ProgressBar progressBar) {
+	public ProgressBarAsyncTask(TextView textView, ProgressDialog progressDialog) {
 		super();
 //		pdialog = new ProgressDialog(Context);
 		this.textView = textView;
 		this.progressBar = progressBar;
+		this.progressDialog = progressDialog;
 		
 //		pdialog.show();
 	}
@@ -53,15 +55,16 @@ public class ProgressBarAsyncTask extends AsyncTask<Integer, Integer, String> {
 	@Override
 	protected void onPostExecute(String result) {
 		textView.setText("异步操作执行结束" + result);
-		progressBar.setVisibility(View.GONE);
-//		pdialog.dismiss();
+//		progressBar.setVisibility(View.GONE);
+		progressDialog.dismiss();
 	}
 
 	// 该方法运行在UI线程当中,并且运行在UI线程当中 可以对UI空间进行设置
 	@Override
 	protected void onPreExecute() {
 		textView.setText("开始执行异步线程");
-		progressBar.setVisibility(View.VISIBLE);
+//		progressBar.setVisibility(View.VISIBLE);
+		progressDialog.show();
 	}
 
 	/**
@@ -72,7 +75,7 @@ public class ProgressBarAsyncTask extends AsyncTask<Integer, Integer, String> {
 	@Override
 	protected void onProgressUpdate(Integer... values) {
 		int vlaue = values[0];
-		progressBar.setProgress(vlaue);
+//		progressBar.setProgress(vlaue);
 	}
 
 }
